@@ -43,6 +43,7 @@ namespace myRestAPI
                 build.UseSqlServer(connectionString);
             });
             services.AddScoped(typeof(Services.TodoService), typeof(Services.TodoService));
+            services.AddScoped(typeof(Services.AuthService), typeof(Services.AuthService));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
