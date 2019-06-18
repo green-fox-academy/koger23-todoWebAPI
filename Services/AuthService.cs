@@ -18,7 +18,7 @@ namespace myRestAPI.Services
                 var usernameAndPasswordString = Encoding.UTF8.GetString(Convert.FromBase64String(creditentialValue));
                 var usernameAndPassowrd = usernameAndPasswordString.Split(":");
                 // here to check in database the username and password
-                if (usernameAndPassowrd[0] == "admin" && usernameAndPassowrd[1] == "password")
+                if (checkUserNameAndPassword(usernameAndPassowrd))
                 {
                     var claimsData = new[] { new Claim(ClaimTypes.Name, usernameAndPassowrd[0]) };
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisanotsecuresecuritykey"));
@@ -35,6 +35,15 @@ namespace myRestAPI.Services
                 }
             }
             return "";
+        }
+
+        private Boolean checkUserNameAndPassword(String[] usernameAndPassowrd)
+        {
+            if (usernameAndPassowrd[0] == "admin" && usernameAndPassowrd[1] == "password")
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
