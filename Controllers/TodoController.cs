@@ -9,7 +9,7 @@ using myRestAPI.Services;
 
 namespace myRestAPI.Controllers
 {
-    [Route("api/v1")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class TodoController : ControllerBase
     {
@@ -26,17 +26,18 @@ namespace myRestAPI.Controllers
             return todoService.FindAll();
         }
 
+        [HttpPost]
+        public IActionResult Post([FromBody] TodoDTO todoDTO)
+        {
+            todoService.createTodo(todoDTO);
+            return Ok();
+        }
+
         // GET: api/Todo/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
-        }
-
-        // POST: api/Todo
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
         }
 
         // PUT: api/Todo/5

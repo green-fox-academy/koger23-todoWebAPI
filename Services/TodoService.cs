@@ -21,5 +21,21 @@ namespace myRestAPI.Services
             todoListDTO.todoList = _context.Todos.ToList();
             return todoListDTO;
         }
+
+        public void createTodo(TodoDTO todoDTO)
+        {
+            _context.Add(TodoDTOConverter(todoDTO));
+            _context.SaveChanges();
+        }
+
+        public Todo TodoDTOConverter(TodoDTO todoDTO)
+        {
+            Todo newTodo = new Todo();
+            newTodo.name = todoDTO.name;
+            newTodo.description = todoDTO.description;
+            Assignee assignee = _context.Assignees.SingleOrDefault(a => a.id == todoDTO.assigneeId);
+            newTodo.assignee = assignee;
+            return newTodo;
+        }
     }
 }

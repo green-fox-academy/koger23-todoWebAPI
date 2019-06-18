@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -27,10 +28,14 @@ namespace myRestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
             services.AddDbContext<ApplicationContext>(build => {
-                build.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TodoApiDBs;Trusted_Connection=True;MultipleActiveResultSets=True");
+                build.UseSqlServer(configuration.GetConnectionString(Environment.GetEnvironmentVariable("MSSQL_DB_CONNECTION_STRING")));
             });
-            // services.AddScoped(typeof(Services.TodoService), typeof(Services.TodoService));
+            services.AddScoped(typeof(Services.TodoService), typeof(Services.TodoService));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

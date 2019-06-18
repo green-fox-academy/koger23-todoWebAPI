@@ -7,6 +7,6 @@ namespace myRestAPI.Models
         public long id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
-        public ICollection<Todo> Student { get; set; }
+        public ICollection<Todo> TodoList { get; set; }
     }
 }
