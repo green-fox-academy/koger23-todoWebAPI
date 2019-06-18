@@ -30,6 +30,7 @@ namespace myRestAPI
             services.AddDbContext<ApplicationContext>(build => {
                 build.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TodoApiDBs;Trusted_Connection=True;MultipleActiveResultSets=True");
             });
+            // services.AddScoped(typeof(Services.TodoService), typeof(Services.TodoService));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

@@ -4,18 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using myRestAPI.Models;
+using myRestAPI.Services;
 
 namespace myRestAPI.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1")]
     [ApiController]
     public class TodoController : ControllerBase
     {
-        // GET: api/Todo
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private TodoService todoService;
+
+        public TodoController(TodoService todoService)
         {
-            return new string[] { "value1", "value2" };
+            this.todoService = todoService;
+        }
+
+        [HttpGet]
+        public TodoListDTO Get()
+        {
+            return todoService.FindAll();
         }
 
         // GET: api/Todo/5
