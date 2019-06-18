@@ -37,7 +37,7 @@ namespace myRestAPI.Services
             return "";
         }
 
-        private Boolean checkUserNameAndPassword(String[] usernameAndPassowrd)
+        private bool checkUserNameAndPassword(String[] usernameAndPassowrd)
         {
             if (usernameAndPassowrd[0] == "admin" && usernameAndPassowrd[1] == "password")
             {
