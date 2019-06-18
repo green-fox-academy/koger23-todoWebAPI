@@ -41,7 +41,7 @@ namespace myRestAPI.Controllers
                     return Ok(tokenString);
                 }
             }
-            return BadRequest();
+            return Unauthorized();
         }
     }
 }
