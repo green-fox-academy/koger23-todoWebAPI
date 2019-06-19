@@ -15,9 +15,9 @@ namespace myRestAPI.Controllers
     [ApiController]
     public class TodoController : ControllerBase
     {
-        private TodoService todoService;
+        private readonly ITodoService todoService;
 
-        public TodoController(TodoService todoService)
+        public TodoController(ITodoService todoService)
         {
             this.todoService = todoService;
         }
