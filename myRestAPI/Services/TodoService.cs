@@ -1,7 +1,8 @@
-using AutoMapper;
+﻿using AutoMapper;
 using myRestAPI.Models;
 using System.Linq;
 using myRestAPI.Profiles;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace myRestAPI.Services
 {
@@ -52,5 +53,12 @@ namespace myRestAPI.Services
             _context.SaveChanges();
         }
 
+        public void Update(int id, TodoDTO todoDTO)
+        {
+            Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
+            todo.id = id;
+            _context.Update(todo);
+            _context.SaveChanges();
+        }
     }
 }
