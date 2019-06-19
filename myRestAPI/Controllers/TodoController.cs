@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 using myRestAPI.Services;
@@ -42,10 +42,11 @@ namespace myRestAPI.Controllers
         {
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(long id)
         {
+            todoService.deleteTodo(id);
+            return NoContent();
         }
     }
 }
