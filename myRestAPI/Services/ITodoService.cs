@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 
 namespace myRestAPI.Services
@@ -8,8 +8,8 @@ namespace myRestAPI.Services
         TodoListDTO FindAll();
         void createTodo(TodoDTO todoDTO);
         Todo TodoDTOConverter(TodoDTO todoDTO);
-        Todo getTodo(long id);
-        void deleteTodo(long id);
-        void Update(int id, TodoDTO todoDTO);
+        ActionResult<Todo> getTodo(long id);
+        ActionResult<Todo> deleteTodo(long id);
+        ActionResult<Todo> Update(int id, TodoDTO todoDTO);
     }
 }

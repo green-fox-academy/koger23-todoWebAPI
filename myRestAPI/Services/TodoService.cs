@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 using System.Linq;
-using myRestAPI.Profiles;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace myRestAPI.Services
 {
@@ -42,23 +41,39 @@ namespace myRestAPI.Services
             return newTodo;
         }
 
-        public Todo getTodo(long id)
+        public ActionResult<Todo> getTodo(long id)
         {
-            return _context.Todos.Find(id);
+            Todo todo = _context.Todos.Find(id);
+            if (todo == null)
+            {
+                return new NotFoundObjectResult("Todo not found with this id.");
+            }
+            return todo;
         }
 
-        public void deleteTodo(long id)
+        public ActionResult<Todo> deleteTodo(long id)
         {
+            Todo todo = _context.Todos.Find(id);
+            if (todo == null)
+            {
+                return new NotFoundObjectResult("Todo not found with this id.");
+            }
             _context.Remove(_context.Todos.Find(id));
             _context.SaveChanges();
+            return new OkResult();
         }
 
-        public void Update(int id, TodoDTO todoDTO)
+        public ActionResult<Todo> Update(int id, TodoDTO todoDTO)
         {
             Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
             todo.id = id;
+            if (todo == null)
+            {
+                return new NotFoundObjectResult("Todo not found with this id.");
+            }
             _context.Update(todo);
             _context.SaveChanges();
+            return new OkResult();
         }
     }
 }
