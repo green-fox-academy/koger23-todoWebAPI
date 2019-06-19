@@ -26,6 +26,7 @@ namespace myRestAPI.Services
         public void createTodo(TodoDTO todoDTO)
         {
             Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
+            todo.assignee = _context.Assignees.Find(todoDTO.assigneeId);
             _context.Add(todo);
             _context.SaveChanges();
         }
