@@ -6,7 +6,7 @@ using myRestAPI.Services;
 namespace myRestAPI.Controllers
 {
     [Authorize]
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class TodoController : ControllerBase
     {
@@ -30,14 +30,13 @@ namespace myRestAPI.Controllers
             return Ok();
         }
 
-        // GET: api/Todo/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public Todo Get(long id)
         {
-            return "value";
+            Todo todo = todoService.getTodo(id);
+            return todo;
         }
 
-        // PUT: api/Todo/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
