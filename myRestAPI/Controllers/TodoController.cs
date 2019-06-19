@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using myRestAPI.Models;
 using myRestAPI.Services;
 
@@ -38,8 +39,9 @@ namespace myRestAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] TodoDTO todoDTO)
         {
+            todoService.Update(id, todoDTO);
         }
 
         [HttpDelete("{id}")]
