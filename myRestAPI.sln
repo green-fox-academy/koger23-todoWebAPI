@@ -3,18 +3,34 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myRestAPI", "myRestAPI.csproj", "{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myRestAPI", "myRestAPI.csproj", "{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myRestAPITests", "..\myRestAPITests\myRestAPITests.csproj", "{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}.Debug|x64.ActiveCfg = Debug|x64
+		{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}.Debug|x64.Build.0 = Debug|x64
 		{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}.Release|x64.ActiveCfg = Release|x64
+		{F5E16081-ED5C-49CA-9CCE-938C3ED8AF0F}.Release|x64.Build.0 = Release|x64
+		{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}.Debug|x64.ActiveCfg = Debug|x64
+		{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}.Debug|x64.Build.0 = Debug|x64
+		{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}.Release|x64.ActiveCfg = Release|x64
+		{DE153BBA-4BDF-40CE-AB53-99D02EB34CD6}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
