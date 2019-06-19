@@ -1,18 +1,19 @@
-﻿using myRestAPI.Models;
-using System;
-using System.Collections.Generic;
+﻿using AutoMapper;
+using myRestAPI.Models;
 using System.Linq;
-using System.Threading.Tasks;
+using myRestAPI.Profiles;
 
 namespace myRestAPI.Services
 {
     public class TodoService : ITodoService
     {
         private readonly ApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public TodoService(ApplicationContext context)
+        public TodoService(ApplicationContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public TodoListDTO FindAll()
@@ -24,7 +25,8 @@ namespace myRestAPI.Services
 
         public void createTodo(TodoDTO todoDTO)
         {
-            _context.Add(TodoDTOConverter(todoDTO));
+            Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
+            _context.Add(todo);
             _context.SaveChanges();
         }
 
