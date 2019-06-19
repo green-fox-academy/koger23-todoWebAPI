@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace myRestAPI.Models
 {
@@ -12,10 +12,6 @@ namespace myRestAPI.Models
         public string description { get; set; }
 
         public TodoDTO(string name, long assigneeId, string description = "")
-        {
-            this.name = name;
-            this.assigneeId = assigneeId;
-            this.description = description;
         }
     }
 }
