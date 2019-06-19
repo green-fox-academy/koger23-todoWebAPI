@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace myRestAPI.Services
 {
-    public class TodoService
+    public class TodoService : ITodoService
     {
-        private ApplicationContext _context;
+        private readonly ApplicationContext _context;
 
         public TodoService(ApplicationContext context)
         {
