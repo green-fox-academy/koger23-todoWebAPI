@@ -7,5 +7,6 @@ namespace myRestAPI.Services
         TodoListDTO FindAll();
         void createTodo(TodoDTO todoDTO);
         Todo TodoDTOConverter(TodoDTO todoDTO);
+        Todo getTodo(long id);
     }
 }

@@ -40,5 +40,10 @@ namespace myRestAPI.Services
             newTodo.assignee = assignee;
             return newTodo;
         }
+
+        public Todo getTodo(long id)
+        {
+            return _context.Todos.Find(id);
+        }
     }
 }
