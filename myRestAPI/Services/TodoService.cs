@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using myRestAPI.Models;
 using System.Linq;
 using myRestAPI.Profiles;
@@ -45,5 +45,12 @@ namespace myRestAPI.Services
         {
             return _context.Todos.Find(id);
         }
+
+        public void deleteTodo(long id)
+        {
+            _context.Remove(_context.Todos.Find(id));
+            _context.SaveChanges();
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using myRestAPI.Models;
+using myRestAPI.Models;
 
 namespace myRestAPI.Services
 {
@@ -8,5 +8,6 @@ namespace myRestAPI.Services
         void createTodo(TodoDTO todoDTO);
         Todo TodoDTOConverter(TodoDTO todoDTO);
         Todo getTodo(long id);
+        void deleteTodo(long id);
     }
 }
