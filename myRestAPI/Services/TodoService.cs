@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myRestAPI.Models;
@@ -69,6 +69,10 @@ namespace myRestAPI.Services
             if (todo == null)
             {
                 return new NotFoundObjectResult("Todo not found with this id.");
+            }
+            if (todo.Assignee == null || todo.Creator == null)
+            {
+                return new BadRequestResult();
             }
             _context.Update(todo);
             await _context.SaveChangesAsync();
