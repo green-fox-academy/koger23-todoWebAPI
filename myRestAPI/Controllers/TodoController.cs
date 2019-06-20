@@ -27,8 +27,7 @@ namespace myRestAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] TodoDTO todoDTO)
         {
-            await todoService.CreateTodo(todoDTO);
-            return Ok();
+            return await todoService.CreateTodo(todoDTO);
         }
 
         [HttpGet("{id}")]
