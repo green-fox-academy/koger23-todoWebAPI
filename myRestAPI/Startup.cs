@@ -11,7 +11,7 @@ using myRestAPI.Profiles;
 using myRestAPI.Services;
 using System;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace myRestAPI
 {
@@ -47,14 +47,37 @@ namespace myRestAPI
             services.AddSingleton(mapper);
             services.AddScoped<ITodoService, TodoService>();
             services.AddScoped(typeof(AuthService), typeof(AuthService));
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            services.AddAuthentication(options =>
             {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+            {
+                options.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        var userId = int.Parse(context.Principal.Identity.Name);
+                        var user = userService.GetById(userId);
+                        if (user == null)
+                        {
+                            // return unauthorized if user no longer exists
+                            context.Fail("Unauthorized");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidIssuer = "example.com",
                     ValidAudience = "example.com",
+                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisanotsecuresecuritykey")),
             };
         });
