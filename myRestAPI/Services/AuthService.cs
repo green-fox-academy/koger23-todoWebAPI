@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
-using myRestAPI.Models.User;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
