@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace myRestAPI.Services
 {
-    interface IUserService
+    public interface IUserService
     {
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
