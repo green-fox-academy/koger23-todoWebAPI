@@ -8,8 +8,7 @@ namespace myRestAPI.Services
     {
         TodoListDTO FindAll();
         Task CreateTodo(TodoDTO todoDTO);
-        Task<Todo> TodoDTOConverter(TodoDTO todoDTO);
-        Task<ActionResult<string>> GetTodo(long id);
+        ActionResult<string> GetTodo(long id);
         Task<ActionResult<Todo>> DeleteTodo(long id);
         Task<ActionResult<Todo>> Update(int id, TodoDTO todoDTO);
         string SerializeObject(object obj);
