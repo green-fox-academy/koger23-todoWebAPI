@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myRestAPI.Models;
@@ -29,12 +29,18 @@ namespace myRestAPI.Services
             return SerializeObject(todoListDTO);
         }
 
-        public async Task CreateTodo(TodoDTO todoDTO)
+        public async Task<IActionResult> CreateTodo(TodoDTO todoDTO)
         {
             Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
             todo.Assignee = _context.Assignees.Find(todoDTO.AssigneeId);
+            todo.Creator = _context.Users.Find(todoDTO.UserId);
+            if (todo.Assignee == null || todo.Creator == null)
+            {
+                return new BadRequestResult();
+            }
             _context.Add(todo);
             await _context.SaveChangesAsync();
+            return new OkResult();
         }
 
         public ActionResult<string> GetTodo(long id)

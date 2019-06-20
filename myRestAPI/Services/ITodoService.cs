@@ -7,7 +7,7 @@ namespace myRestAPI.Services
     public interface ITodoService
     {
         string FindAll();
-        Task CreateTodo(TodoDTO todoDTO);
+        Task<IActionResult> CreateTodo(TodoDTO todoDTO);
         ActionResult<string> GetTodo(long id);
         Task<ActionResult<Todo>> DeleteTodo(long id);
         Task<ActionResult<Todo>> Update(int id, TodoDTO todoDTO);
