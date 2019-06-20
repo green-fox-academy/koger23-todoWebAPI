@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 using System.Linq;
@@ -74,6 +74,15 @@ namespace myRestAPI.Services
             _context.Update(todo);
             _context.SaveChanges();
             return new OkResult();
+        }
+
+        public string SerializeObject(object obj)
+        {
+            return JsonConvert.SerializeObject(obj, Formatting.None,
+                        new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        });
         }
     }
 }
