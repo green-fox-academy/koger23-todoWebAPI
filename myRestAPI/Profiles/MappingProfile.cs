@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using myRestAPI.Models;
+using myRestAPI.Models.User;
 
 namespace myRestAPI.Profiles
 {
-    public class TodoProfile : Profile
+    public class MappingProfile : Profile
     {
-        public TodoProfile()
+        public MappingProfile()
         {
             CreateMap<TodoDTO, Todo>();
             CreateMap<Todo, TodoDTO>();
