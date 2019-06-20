@@ -1,5 +1,3 @@
-using myRestAPI.Models;
-
 namespace myRestAPI.Models
 {
     public class Todo
