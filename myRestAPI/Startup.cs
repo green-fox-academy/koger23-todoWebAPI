@@ -41,7 +41,7 @@ namespace myRestAPI
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new TodoProfile());
+                mc.AddProfile(new MappingProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
