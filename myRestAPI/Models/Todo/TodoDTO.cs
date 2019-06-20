@@ -13,5 +13,6 @@ namespace myRestAPI.Models
         public string Description { get; set; }
         [Required(ErrorMessage = "Todo state is required")]
         public bool Done { get; set; }
+        public int UserId { get; set; }
     }
 }
