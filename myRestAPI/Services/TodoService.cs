@@ -22,7 +22,9 @@ namespace myRestAPI.Services
         public string FindAll()
         {
             TodoListDTO todoListDTO = new TodoListDTO();
-            var todos = _context.Todos.Include(i => i.Assignee);
+            var todos = _context.Todos
+                .Include(i => i.Assignee)
+                .Include(t => t.Creator);
             todoListDTO.todoList = todos.ToList();
             return SerializeObject(todoListDTO);
         }
@@ -37,7 +39,10 @@ namespace myRestAPI.Services
 
         public ActionResult<string> GetTodo(long id)
         {
-            Todo todo = _context.Todos.Include(i => i.Assignee).Single(t => t.Id == id);
+            Todo todo = _context.Todos
+                .Include(i => i.Assignee)
+                .Include(t => t.Creator)
+                .Single(t => t.Id == id);
             if (todo == null)
             {
                 return new NotFoundObjectResult("Todo not found with this id.");
