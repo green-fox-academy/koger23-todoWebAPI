@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 using Newtonsoft.Json;
@@ -18,11 +18,12 @@ namespace myRestAPI.Services
             _mapper = mapper;
         }
 
-        public TodoListDTO FindAll()
+        public string FindAll()
         {
             TodoListDTO todoListDTO = new TodoListDTO();
-            todoListDTO.todoList = _context.Todos.ToList();
-            return todoListDTO;
+            var todos = _context.Todos.Include(i => i.Assignee);
+            todoListDTO.todoList = todos.ToList();
+            return SerializeObject(todoListDTO);
         }
 
         public async Task CreateTodo(TodoDTO todoDTO)
