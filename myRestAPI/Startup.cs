@@ -45,8 +45,9 @@ namespace myRestAPI
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            services.AddScoped<ITodoService, TodoService>();
-            services.AddScoped(typeof(AuthService), typeof(AuthService));
+            services.AddTransient<ITodoService, TodoService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthService, AuthService>();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -81,7 +82,6 @@ namespace myRestAPI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisanotsecuresecuritykey")),
             };
         });
-            services.AddScoped<IUserService, UserService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
     }
 
