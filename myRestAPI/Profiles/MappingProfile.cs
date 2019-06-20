@@ -10,6 +10,8 @@ namespace myRestAPI.Profiles
         {
             CreateMap<TodoDTO, Todo>();
             CreateMap<Todo, TodoDTO>();
+            CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>();
         }
     }
 }
