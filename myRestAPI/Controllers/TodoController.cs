@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 using myRestAPI.Services;
+using System.Threading.Tasks;
 
 namespace myRestAPI.Controllers
 {
@@ -18,34 +19,34 @@ namespace myRestAPI.Controllers
         }
 
         [HttpGet]
-        public TodoListDTO Get()
+        public async Task<TodoListDTO> Get()
         {
-            return todoService.FindAll();
+            return await todoService.FindAll();
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] TodoDTO todoDTO)
+        public async Task<IActionResult> Post([FromBody] TodoDTO todoDTO)
         {
-            todoService.CreateTodo(todoDTO);
+            await todoService.CreateTodo(todoDTO);
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(long id)
+        public async Task<ActionResult<string>> Get(long id)
         {
-            return todoService.GetTodo(id);
+            return await todoService.GetTodo(id);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Todo> Put(int id, [FromBody] TodoDTO todoDTO)
+        public async Task<ActionResult<Todo>> Put(int id, [FromBody] TodoDTO todoDTO)
         {
-            return todoService.Update(id, todoDTO);
+            return await todoService.Update(id, todoDTO);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Todo> Delete(long id)
+        public async Task<ActionResult<Todo>> Delete(long id)
         {
-            return todoService.DeleteTodo(id);
+            return await todoService.DeleteTodo(id);
         }
     }
 }
