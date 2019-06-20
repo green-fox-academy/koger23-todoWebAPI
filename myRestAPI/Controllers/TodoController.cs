@@ -32,9 +32,9 @@ namespace myRestAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<string>> Get(long id)
+        public ActionResult<string> Get(long id)
         {
-            return await todoService.GetTodo(id);
+            return todoService.GetTodo(id);
         }
 
         [HttpPut("{id}")]
