@@ -1,5 +1,6 @@
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using myRestAPI.Models;
 using Newtonsoft.Json;
 using System.Linq;
@@ -36,15 +37,11 @@ namespace myRestAPI.Services
 
         public ActionResult<string> GetTodo(long id)
         {
-            Todo todo = _context.Todos
-                .Single(t => t.Id == id);
+            Todo todo = _context.Todos.Include(i => i.Assignee).Single(t => t.Id == id);
             if (todo == null)
             {
                 return new NotFoundObjectResult("Todo not found with this id.");
             }
-            _context.Entry(todo)
-                .Reference(t => t.Assignee)
-                .Load();
             return SerializeObject(todo);
         }
 
