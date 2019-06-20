@@ -1,10 +1,9 @@
-﻿using System;
-using System.Text;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
+﻿using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace myRestAPI.Services
 {
@@ -24,12 +23,12 @@ namespace myRestAPI.Services
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisanotsecuresecuritykey"));
                     var signInCreditentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
                     var token = new JwtSecurityToken(
-                        issuer: "example.com",
-                        audience: "example.com",
-                        expires: DateTime.Now.AddMinutes(1),
-                        claims: claimsData,
-                        signingCredentials: signInCreditentials
-                        );
+                                                        issuer: "example.com",
+                                                        audience: "example.com",
+                                                        expires: DateTime.Now.AddMinutes(1),
+                                                        claims: claimsData,
+                                                        signingCredentials: signInCreditentials
+                                                        );
                     var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
                     return tokenString;
                 }
