@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 using Newtonsoft.Json;
@@ -31,16 +31,6 @@ namespace myRestAPI.Services
             todo.Assignee = _context.Assignees.Find(todoDTO.AssigneeId);
             _context.Add(todo);
             await _context.SaveChangesAsync();
-        }
-
-        public Todo TodoDTOConverter(TodoDTO todoDTO)
-        {
-            Todo newTodo = new Todo();
-            newTodo.Name = todoDTO.Name;
-            newTodo.Description = todoDTO.Description;
-            Assignee assignee = _context.Assignees.SingleOrDefault(a => a.Id == todoDTO.AssigneeId);
-            newTodo.Assignee = assignee;
-            return newTodo;
         }
 
         public ActionResult<string> GetTodo(long id)
