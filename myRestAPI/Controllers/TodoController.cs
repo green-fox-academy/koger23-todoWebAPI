@@ -26,14 +26,14 @@ namespace myRestAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] TodoDTO todoDTO)
         {
-            todoService.createTodo(todoDTO);
+            todoService.CreateTodo(todoDTO);
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Todo> Get(long id)
+        public ActionResult<string> Get(long id)
         {
-            return todoService.getTodo(id);
+            return todoService.GetTodo(id);
         }
 
         [HttpPut("{id}")]
@@ -45,7 +45,7 @@ namespace myRestAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Todo> Delete(long id)
         {
-            return todoService.deleteTodo(id);
+            return todoService.DeleteTodo(id);
         }
     }
 }
