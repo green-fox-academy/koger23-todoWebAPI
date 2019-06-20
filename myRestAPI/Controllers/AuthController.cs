@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using myRestAPI.Models.User;
 using myRestAPI.Services;
 
 namespace myRestAPI.Controllers
@@ -7,22 +9,18 @@ namespace myRestAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private AuthService authService;
+        private IAuthService authService;
 
-        public AuthController(AuthService authService)
+        public AuthController(IAuthService authService)
         {
             this.authService = authService;
         }
 
+        [AllowAnonymous]
         [HttpPost("token")]
-        public IActionResult Token()
+        public ActionResult<string> Token()
         {
-            string result = authService.checkToken(Request.Headers["Authorization"]);
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            return Unauthorized();
+            return authService.checkToken(Request.Headers["Authorization"]);
         }
     }
 }
