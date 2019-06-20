@@ -19,7 +19,7 @@ namespace myRestAPI.Controllers
         }
 
         [HttpGet]
-        public TodoListDTO Get()
+        public string Get()
         {
             return todoService.FindAll();
         }
