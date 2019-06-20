@@ -19,9 +19,9 @@ namespace myRestAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<TodoListDTO> Get()
+        public TodoListDTO Get()
         {
-            return await todoService.FindAll();
+            return todoService.FindAll();
         }
 
         [HttpPost]
