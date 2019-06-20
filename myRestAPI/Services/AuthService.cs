@@ -7,9 +7,9 @@ using System.Text;
 
 namespace myRestAPI.Services
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
-        public String checkToken(StringValues header)
+        public string checkToken(StringValues header)
         {
             if (header.ToString().StartsWith("Basic"))
             {
