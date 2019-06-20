@@ -6,10 +6,11 @@ namespace myRestAPI.Services
     public interface ITodoService
     {
         TodoListDTO FindAll();
-        void createTodo(TodoDTO todoDTO);
+        void CreateTodo(TodoDTO todoDTO);
         Todo TodoDTOConverter(TodoDTO todoDTO);
-        ActionResult<Todo> getTodo(long id);
-        ActionResult<Todo> deleteTodo(long id);
+        ActionResult<string> GetTodo(long id);
+        ActionResult<Todo> DeleteTodo(long id);
         ActionResult<Todo> Update(int id, TodoDTO todoDTO);
+        string SerializeObject(object obj);
     }
 }
