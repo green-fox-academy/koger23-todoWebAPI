@@ -1,3 +1,5 @@
+using myRestAPI.Models;
+
 namespace myRestAPI.Models
 {
     public class Todo
@@ -7,5 +9,6 @@ namespace myRestAPI.Models
         public Assignee Assignee { get; set; }
         public string Description { get; set; }
         public bool Done { get; set; }
+        public User.User Creator { get; }
     }
 }
