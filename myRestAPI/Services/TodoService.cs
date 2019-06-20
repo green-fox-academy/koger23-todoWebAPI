@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace myRestAPI.Services
 {
@@ -24,12 +25,12 @@ namespace myRestAPI.Services
             return todoListDTO;
         }
 
-        public void CreateTodo(TodoDTO todoDTO)
+        public async Task CreateTodo(TodoDTO todoDTO)
         {
             Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
             todo.Assignee = _context.Assignees.Find(todoDTO.AssigneeId);
             _context.Add(todo);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public Todo TodoDTOConverter(TodoDTO todoDTO)
@@ -56,7 +57,7 @@ namespace myRestAPI.Services
             return SerializeObject(todo);
         }
 
-        public ActionResult<Todo> DeleteTodo(long id)
+        public async Task<ActionResult<Todo>> DeleteTodo(long id)
         {
             Todo todo = _context.Todos.Find(id);
             if (todo == null)
@@ -64,11 +65,11 @@ namespace myRestAPI.Services
                 return new NotFoundObjectResult("Todo not found with this id.");
             }
             _context.Remove(_context.Todos.Find(id));
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return new OkResult();
         }
 
-        public ActionResult<Todo> Update(int id, TodoDTO todoDTO)
+        public async Task<ActionResult<Todo>> Update(int id, TodoDTO todoDTO)
         {
             Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
             todo.Id = id;
@@ -77,17 +78,18 @@ namespace myRestAPI.Services
                 return new NotFoundObjectResult("Todo not found with this id.");
             }
             _context.Update(todo);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return new OkResult();
         }
 
         public string SerializeObject(object obj)
         {
-            return JsonConvert.SerializeObject(obj, Formatting.None,
+            string output = JsonConvert.SerializeObject(obj, Formatting.None,
                         new JsonSerializerSettings()
                         {
                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                         });
+            return output;
         }
     }
 }
