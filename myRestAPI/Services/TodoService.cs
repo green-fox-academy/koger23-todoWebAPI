@@ -1,6 +1,7 @@
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
+using Newtonsoft.Json;
 using System.Linq;
 
 namespace myRestAPI.Services
@@ -23,10 +24,10 @@ namespace myRestAPI.Services
             return todoListDTO;
         }
 
-        public void createTodo(TodoDTO todoDTO)
+        public void CreateTodo(TodoDTO todoDTO)
         {
             Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
-            todo.assignee = _context.Assignees.Find(todoDTO.assigneeId);
+            todo.Assignee = _context.Assignees.Find(todoDTO.AssigneeId);
             _context.Add(todo);
             _context.SaveChanges();
         }
@@ -34,24 +35,28 @@ namespace myRestAPI.Services
         public Todo TodoDTOConverter(TodoDTO todoDTO)
         {
             Todo newTodo = new Todo();
-            newTodo.name = todoDTO.name;
-            newTodo.description = todoDTO.description;
-            Assignee assignee = _context.Assignees.SingleOrDefault(a => a.id == todoDTO.assigneeId);
-            newTodo.assignee = assignee;
+            newTodo.Name = todoDTO.Name;
+            newTodo.Description = todoDTO.Description;
+            Assignee assignee = _context.Assignees.SingleOrDefault(a => a.Id == todoDTO.AssigneeId);
+            newTodo.Assignee = assignee;
             return newTodo;
         }
 
-        public ActionResult<Todo> getTodo(long id)
+        public ActionResult<string> GetTodo(long id)
         {
-            Todo todo = _context.Todos.Find(id);
+            Todo todo = _context.Todos
+                .Single(t => t.Id == id);
             if (todo == null)
             {
                 return new NotFoundObjectResult("Todo not found with this id.");
             }
-            return todo;
+            _context.Entry(todo)
+                .Reference(t => t.Assignee)
+                .Load();
+            return SerializeObject(todo);
         }
 
-        public ActionResult<Todo> deleteTodo(long id)
+        public ActionResult<Todo> DeleteTodo(long id)
         {
             Todo todo = _context.Todos.Find(id);
             if (todo == null)
@@ -66,7 +71,7 @@ namespace myRestAPI.Services
         public ActionResult<Todo> Update(int id, TodoDTO todoDTO)
         {
             Todo todo = _mapper.Map<TodoDTO, Todo>(todoDTO);
-            todo.id = id;
+            todo.Id = id;
             if (todo == null)
             {
                 return new NotFoundObjectResult("Todo not found with this id.");
