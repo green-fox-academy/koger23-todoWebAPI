@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Primitives;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
+using myRestAPI.Models.User;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,40 +11,41 @@ namespace myRestAPI.Services
 {
     public class AuthService : IAuthService
     {
-        public string checkToken(StringValues header)
+        private IUserService _userService;
+
+        public AuthService(IUserService userService)
         {
-            if (header.ToString().StartsWith("Basic"))
+            this._userService = userService;
+        }
+
+        public ActionResult<string> checkToken(StringValues header)
+        {
+            var creditentialValue = header.ToString().Substring("Basic ".Length).Trim();
+            if (creditentialValue != null)
             {
-                var creditentialValue = header.ToString().Substring("Basic ".Length).Trim();
                 var usernameAndPasswordString = Encoding.UTF8.GetString(Convert.FromBase64String(creditentialValue));
                 var usernameAndPassowrd = usernameAndPasswordString.Split(":");
-                // here to check in database the username and password
-                if (checkUserNameAndPassword(usernameAndPassowrd))
+                var user = _userService.Authenticate(usernameAndPassowrd[0], usernameAndPassowrd[1]);
+                if (user != null)
                 {
-                    var claimsData = new[] { new Claim(ClaimTypes.Name, usernameAndPassowrd[0]) };
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisanotsecuresecuritykey"));
+
+                    var claimsData = new Claim[] { new Claim(ClaimTypes.Name, user.Id.ToString(), usernameAndPassowrd[0]) };
+                        
                     var signInCreditentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
                     var token = new JwtSecurityToken(
                                                         issuer: "example.com",
                                                         audience: "example.com",
-                                                        expires: DateTime.Now.AddMinutes(1),
+                                                        expires: DateTime.Now.AddMinutes(10),
                                                         claims: claimsData,
                                                         signingCredentials: signInCreditentials
                                                         );
                     var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
                     return tokenString;
+                    
                 }
             }
-            return "";
-        }
-
-        public bool checkUserNameAndPassword(String[] usernameAndPassowrd)
-        {
-            if (usernameAndPassowrd[0] == "admin" && usernameAndPassowrd[1] == "password")
-            {
-                return true;
-            }
-            return false;
+            return new NotFoundObjectResult("User does not exists or wrong password");
         }
     }
 }
