@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using myRestAPI;
 
 namespace myRestAPI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20190620193312_AddCreatorToTodo")]
+    partial class AddCreatorToTodo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,8 +44,6 @@ namespace myRestAPI.Migrations
 
                     b.Property<long?>("AssigneeId");
 
-                    b.Property<int?>("CreatorId");
-
                     b.Property<string>("Description");
 
                     b.Property<bool>("Done");
@@ -53,8 +53,6 @@ namespace myRestAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssigneeId");
-
-                    b.HasIndex("CreatorId");
 
                     b.ToTable("Todos");
                 });
@@ -85,10 +83,6 @@ namespace myRestAPI.Migrations
                     b.HasOne("myRestAPI.Models.Assignee", "Assignee")
                         .WithMany("TodoList")
                         .HasForeignKey("AssigneeId");
-
-                    b.HasOne("myRestAPI.Models.User.User", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
                 });
 #pragma warning restore 612, 618
         }
