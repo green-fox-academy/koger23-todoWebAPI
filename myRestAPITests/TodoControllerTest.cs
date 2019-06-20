@@ -7,7 +7,7 @@ using myRestAPI.Services;
 namespace myRestAPITests
 {
     [TestClass]
-    public class UnitTest1
+    public class TodoControllerTest
     {
         [TestMethod]
         public void TodoControllerTest_GetTodoList()
