@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
 using myRestAPI.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace myRestAPI.Controllers
@@ -19,7 +20,7 @@ namespace myRestAPI.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public List<TodoGetDTO> Get()
         {
             return todoService.FindAll();
         }
