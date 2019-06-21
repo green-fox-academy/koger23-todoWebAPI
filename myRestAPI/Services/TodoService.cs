@@ -1,8 +1,9 @@
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myRestAPI.Models;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,14 +20,15 @@ namespace myRestAPI.Services
             _mapper = mapper;
         }
 
-        public string FindAll()
+        public List<TodoGetDTO> FindAll()
         {
-            TodoListDTO todoListDTO = new TodoListDTO();
-            var todos = _context.Todos
-                .Include(i => i.Assignee)
-                .Include(t => t.Creator);
-            todoListDTO.todoList = todos.ToList();
-            return SerializeObject(todoListDTO);
+            var todoList = _context.Todos.ToList();
+            var todoGetDTOList = new List<TodoGetDTO>();
+            foreach (Todo todo in todoList)
+            {
+                todoGetDTOList.Add(_mapper.Map<Todo, TodoGetDTO>(todo));
+            }
+            return todoGetDTOList;
         }
 
         public async Task<IActionResult> CreateTodo(TodoDTO todoDTO)
