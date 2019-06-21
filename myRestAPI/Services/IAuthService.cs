@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
+using myRestAPI.Models.User;
 
 namespace myRestAPI.Services
 {
     public interface IAuthService
     {
-        ActionResult<string> checkToken(StringValues header);
+        ActionResult<User> checkToken(StringValues header);
     }
 }
