@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
+using myRestAPI.Helpers;
 using myRestAPI.Models.User;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,10 +14,12 @@ namespace myRestAPI.Services
     public class AuthService : IAuthService
     {
         private IUserService _userService;
+        private IOptions<AppSettings> _appSettings;
 
-        public AuthService(IUserService userService)
+        public AuthService(IUserService userService, IOptions<AppSettings> appSettings)
         {
             this._userService = userService;
+            this._appSettings = appSettings;
         }
 
         public ActionResult<User> checkToken(StringValues header)
@@ -28,7 +32,7 @@ namespace myRestAPI.Services
                 var user = _userService.Authenticate(usernameAndPassowrd[0], usernameAndPassowrd[1]);
                 if (user != null)
                 {
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisanotsecuresecuritykey"));
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Value.Secret));
 
                     var claimsData = new Claim[] 
                     {

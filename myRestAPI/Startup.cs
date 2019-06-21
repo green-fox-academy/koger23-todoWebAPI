@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using myRestAPI.Helpers;
 using myRestAPI.Profiles;
 using myRestAPI.Services;
 using System;
@@ -27,6 +28,9 @@ namespace myRestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
             String connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=TodoApiDBs;Trusted_Connection=True;MultipleActiveResultSets=True";
             services.AddDbContext<ApplicationContext>(build =>
             {
@@ -73,7 +77,7 @@ namespace myRestAPI
                     ValidIssuer = "example.com",
                     ValidAudience = "example.com",
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisanotsecuresecuritykey")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettingsSection.Get<AppSettings>().Secret)),
             };
         });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
