@@ -58,6 +58,7 @@ namespace myRestAPI.Services
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.Role = "User";
 
             _context.Users.Add(user);
             _context.SaveChanges();
