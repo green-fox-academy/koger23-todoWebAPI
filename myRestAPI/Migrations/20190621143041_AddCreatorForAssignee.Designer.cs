@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using myRestAPI;
 
 namespace myRestAPI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20190621143041_AddCreatorForAssignee")]
+    partial class AddCreatorForAssignee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,7 @@ namespace myRestAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("CreatorId");
-
-                    b.Property<int?>("CreatorId1");
+                    b.Property<int?>("CreatorId");
 
                     b.Property<string>("Email");
 
@@ -35,7 +35,7 @@ namespace myRestAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId1");
+                    b.HasIndex("CreatorId");
 
                     b.ToTable("Assignees");
                 });
@@ -46,7 +46,7 @@ namespace myRestAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("AssigneeId");
+                    b.Property<long?>("AssigneeId");
 
                     b.Property<int?>("CreatorId");
 
@@ -55,8 +55,6 @@ namespace myRestAPI.Migrations
                     b.Property<bool>("Done");
 
                     b.Property<string>("Name");
-
-                    b.Property<long>("UserId");
 
                     b.HasKey("Id");
 
@@ -96,18 +94,17 @@ namespace myRestAPI.Migrations
                 {
                     b.HasOne("myRestAPI.Models.User.User", "Creator")
                         .WithMany()
-                        .HasForeignKey("CreatorId1");
+                        .HasForeignKey("CreatorId");
                 });
 
             modelBuilder.Entity("myRestAPI.Models.Todo", b =>
                 {
                     b.HasOne("myRestAPI.Models.Assignee", "Assignee")
                         .WithMany("TodoList")
-                        .HasForeignKey("AssigneeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AssigneeId");
 
                     b.HasOne("myRestAPI.Models.User.User", "Creator")
-                        .WithMany("TodoList")
+                        .WithMany()
                         .HasForeignKey("CreatorId");
                 });
 #pragma warning restore 612, 618

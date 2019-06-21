@@ -8,5 +8,11 @@ namespace myRestAPI.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public ICollection<Todo> TodoList { get; set; }
+        public long CreatorId { get; set; }
+        public User.User Creator { get; set; }
+
+        public Assignee()
+        {
+        }
     }
 }
