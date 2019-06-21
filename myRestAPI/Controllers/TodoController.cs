@@ -31,7 +31,7 @@ namespace myRestAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(long id)
+        public ActionResult<TodoGetDTO> Get(long id)
         {
             return todoService.GetTodo(id);
         }
