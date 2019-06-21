@@ -8,7 +8,7 @@ namespace myRestAPI.Services
     {
         string FindAll();
         Task<IActionResult> CreateTodo(TodoDTO todoDTO);
-        ActionResult<string> GetTodo(long id);
+        ActionResult<TodoGetDTO> GetTodo(long id);
         Task<ActionResult<Todo>> DeleteTodo(long id);
         Task<ActionResult<Todo>> Update(int id, TodoDTO todoDTO);
         string SerializeObject(object obj);

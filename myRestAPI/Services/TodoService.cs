@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myRestAPI.Models;
@@ -43,17 +43,16 @@ namespace myRestAPI.Services
             return new OkResult();
         }
 
-        public ActionResult<string> GetTodo(long id)
+        public ActionResult<TodoGetDTO> GetTodo(long id)
         {
             Todo todo = _context.Todos
-                .Include(i => i.Assignee)
-                .Include(t => t.Creator)
-                .Single(t => t.Id == id);
+                .Where(t => t.Id == id)
+                .SingleOrDefault();
             if (todo == null)
             {
                 return new NotFoundObjectResult("Todo not found with this id.");
             }
-            return SerializeObject(todo);
+            return _mapper.Map<Todo, TodoGetDTO>(todo); ;
         }
 
         public async Task<ActionResult<Todo>> DeleteTodo(long id)
