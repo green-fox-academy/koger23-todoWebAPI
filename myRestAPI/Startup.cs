@@ -46,6 +46,7 @@ namespace myRestAPI
             services.AddTransient<ITodoService, TodoService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAssigneeService, AssigneeService>();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
