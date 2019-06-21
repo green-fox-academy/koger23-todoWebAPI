@@ -27,12 +27,6 @@ namespace myRestAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //IConfigurationRoot configuration = new ConfigurationBuilder()
-            //    .SetBasePath(Directory.GetCurrentDirectory())
-            //    .AddEnvironmentVariables()
-            //    .AddJsonFile("appsettings.json")
-            //    .Build();
-            // String connectionString = Environment.GetEnvironmentVariable("MSSQL_DB_CONNECTION_STRING");
             String connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=TodoApiDBs;Trusted_Connection=True;MultipleActiveResultSets=True";
             services.AddDbContext<ApplicationContext>(build =>
             {
