@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using myRestAPI.Models.User;
@@ -46,6 +46,8 @@ namespace myRestAPI.Services
                                                         signingCredentials: signInCreditentials
                                                         );
                     user.Token = new JwtSecurityTokenHandler().WriteToken(token);
+                    user.PasswordHash = null;
+                    user.PasswordSalt = null;
                     return user;
                     
                 }
