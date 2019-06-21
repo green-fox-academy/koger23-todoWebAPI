@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using myRestAPI.Models.User;
 using myRestAPI.Services;
 
 namespace myRestAPI.Controllers
@@ -17,7 +18,7 @@ namespace myRestAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("token")]
-        public ActionResult<string> Token()
+        public ActionResult<User> Token()
         {
             return authService.checkToken(Request.Headers["Authorization"]);
         }

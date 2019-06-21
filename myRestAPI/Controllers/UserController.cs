@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Helpers;
+using myRestAPI.Models.Role;
 using myRestAPI.Models.User;
 using myRestAPI.Services;
 using System.Collections.Generic;
@@ -45,11 +46,12 @@ namespace myRestAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public ActionResult<string> Authenticate()
+        public ActionResult<User> Authenticate()
         {
             return _authService.checkToken(Request.Headers["Authorization"]);
         }
-            
+
+        [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
