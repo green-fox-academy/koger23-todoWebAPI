@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
+using myRestAPI.Models.User;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,7 +18,7 @@ namespace myRestAPI.Services
             this._userService = userService;
         }
 
-        public ActionResult<string> checkToken(StringValues header)
+        public ActionResult<User> checkToken(StringValues header)
         {
             var creditentialValue = header.ToString().Substring("Basic ".Length).Trim();
             if (creditentialValue != null)
@@ -29,7 +30,12 @@ namespace myRestAPI.Services
                 {
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("thisisanotsecuresecuritykey"));
 
-                    var claimsData = new Claim[] { new Claim(ClaimTypes.Name, user.Id.ToString(), usernameAndPassowrd[0]) };
+                    var claimsData = new Claim[] 
+                    {
+                        new Claim(ClaimTypes.UserData, user.Id.ToString()), 
+                        new Claim(ClaimTypes.Surname, user.LastName),
+                        new Claim(ClaimTypes.Role, user.Role)
+                    };
                         
                     var signInCreditentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
                     var token = new JwtSecurityToken(
@@ -39,8 +45,8 @@ namespace myRestAPI.Services
                                                         claims: claimsData,
                                                         signingCredentials: signInCreditentials
                                                         );
-                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-                    return tokenString;
+                    user.Token = new JwtSecurityTokenHandler().WriteToken(token);
+                    return user;
                     
                 }
             }
