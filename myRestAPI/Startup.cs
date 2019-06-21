@@ -31,7 +31,7 @@ namespace myRestAPI
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
-            String connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=TodoApiDBs;Trusted_Connection=True;MultipleActiveResultSets=True";
+            String connectionString = Configuration.GetSection("AppSettings").GetConnectionString("ConnectionStringMsSql");
             services.AddDbContext<ApplicationContext>(build =>
             {
                 build.UseSqlServer(connectionString);
