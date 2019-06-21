@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using myRestAPI.Models.User;
@@ -32,7 +32,7 @@ namespace myRestAPI.Services
 
                     var claimsData = new Claim[] 
                     {
-                        new Claim(ClaimTypes.UserData, user.Id.ToString()), 
+                        new Claim(ClaimTypes.Name, user.Id.ToString()), 
                         new Claim(ClaimTypes.Surname, user.LastName),
                         new Claim(ClaimTypes.Role, user.Role)
                     };
