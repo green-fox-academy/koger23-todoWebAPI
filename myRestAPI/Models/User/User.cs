@@ -13,7 +13,7 @@ namespace myRestAPI.Models.User
         public string Role { get; set; }
         public string Token { get; set; }
         public ICollection<Todo> TodoList { get; set; }
-        public ICollection<Assignee> AssigneeList { get; set; }
+        public ICollection<Assignee.Assignee> AssigneeList { get; set; }
 
         public User()
         {
