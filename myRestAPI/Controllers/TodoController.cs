@@ -19,6 +19,7 @@ namespace myRestAPI.Controllers
             this.todoService = todoService;
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public List<TodoGetDTO> Get()
         {
