@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Models;
+using myRestAPI.Models.Role;
 using myRestAPI.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
