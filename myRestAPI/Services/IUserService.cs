@@ -1,4 +1,5 @@
-﻿using myRestAPI.Models.User;
+﻿using myRestAPI.Models;
+using myRestAPI.Models.User;
 using System.Collections.Generic;
 
 namespace myRestAPI.Services
@@ -11,5 +12,6 @@ namespace myRestAPI.Services
         User Create(User user, string password);
         void Update(User userParam, string password = null);
         void Delete(int id);
+        List<TodoGetDTO> GetUserTodos(long id);
     }
 }

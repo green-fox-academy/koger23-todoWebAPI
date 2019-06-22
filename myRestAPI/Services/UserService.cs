@@ -1,4 +1,6 @@
-﻿using myRestAPI.Helpers;
+﻿using AutoMapper;
+using myRestAPI.Helpers;
+using myRestAPI.Models;
 using myRestAPI.Models.User;
 using System;
 using System.Collections.Generic;
@@ -8,11 +10,13 @@ namespace myRestAPI.Services
 {
     public class UserService : IUserService
     {
-        private ApplicationContext _context;
+        private readonly ApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public UserService(ApplicationContext context)
+        public UserService(ApplicationContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public User Authenticate(string username, string password)
@@ -140,6 +144,19 @@ namespace myRestAPI.Services
             }
 
             return true;
+        }
+
+        public List<TodoGetDTO> GetUserTodos(long id)
+        {
+            List<Todo> todoList = _context.Todos
+                                   .Where<Todo>(t => t.Creator.Id == id)
+                                   .ToList();
+            List<TodoGetDTO> returnList = new List<TodoGetDTO>();
+            foreach (var todo in todoList)
+            {
+                returnList.Add(_mapper.Map<Todo, TodoGetDTO>(todo));
+            }
+            return returnList;
         }
     }
 }
