@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using myRestAPI.Models;
+using myRestAPI.Models.Assignee;
 using myRestAPI.Models.User;
-using System.Threading.Tasks;
 
 namespace myRestAPI
 {
