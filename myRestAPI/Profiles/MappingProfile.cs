@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using myRestAPI.Models;
+using myRestAPI.Models.Assignee;
 using myRestAPI.Models.User;
 
 namespace myRestAPI.Profiles
@@ -14,6 +15,10 @@ namespace myRestAPI.Profiles
             CreateMap<UserDTO, User>();
             CreateMap<Todo, TodoGetDTO>();
             CreateMap<TodoGetDTO, Todo>();
+            CreateMap<Assignee, AssigneeDTO>();
+            CreateMap<AssigneeDTO, Assignee>();
+            CreateMap<Assignee, AssigneeGetDTO>();
+            CreateMap<AssigneeGetDTO, Assignee>();
         }
     }
 }
