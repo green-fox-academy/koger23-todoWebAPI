@@ -4,9 +4,7 @@ using Moq;
 using myRestAPI.Controllers;
 using myRestAPI.Models;
 using myRestAPI.Services;
-using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace myRestAPITests
