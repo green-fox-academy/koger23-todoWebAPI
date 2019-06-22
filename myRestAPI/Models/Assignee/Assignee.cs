@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace myRestAPI.Models
+namespace myRestAPI.Models.Assignee
 {
     public class Assignee
     {
