@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using myRestAPI.Helpers;
+using myRestAPI.Models;
 using myRestAPI.Models.Role;
 using myRestAPI.Models.User;
 using myRestAPI.Services;
+using System;
 using System.Collections.Generic;
 
 namespace myRestAPI.Controllers
@@ -93,6 +95,12 @@ namespace myRestAPI.Controllers
         {
             _userService.Delete(id);
             return Ok();
+        }
+
+        [HttpGet("todos")]
+        public List<TodoGetDTO> GetUserTodos()
+        {
+            return _userService.GetUserTodos(Convert.ToInt64(User.Identity.Name));
         }
     }
 }
