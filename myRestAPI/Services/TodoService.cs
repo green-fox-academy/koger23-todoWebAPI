@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using myRestAPI.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
