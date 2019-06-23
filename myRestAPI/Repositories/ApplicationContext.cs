@@ -14,5 +14,9 @@ namespace myRestAPI
         public ApplicationContext(DbContextOptions options) : base(options)
         {
         }
+
+        public ApplicationContext()
+        {
+        }
     }
 }
