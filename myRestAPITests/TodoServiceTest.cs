@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using myRestAPI;
 using myRestAPI.Models;
 using myRestAPI.Profiles;
@@ -21,6 +22,16 @@ namespace myRestAPITests
                 .UseInMemoryDatabase(databaseName: "TestTodoDb")
                 .Options;
         }
+
+        public static IMapper GetMockMapper()
+        {
+            var mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
+            return mockMapper.CreateMapper();
+        }
+
         [TestMethod]
         public void FindAll()
         {
@@ -34,13 +45,7 @@ namespace myRestAPITests
                 context.SaveChanges();
             }
 
-            var mockMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MappingProfile());
-            });
-            var _mapper = mockMapper.CreateMapper();
-
-            var _todoService = new TodoService(new ApplicationContext(options), _mapper);
+            var _todoService = new TodoService(new ApplicationContext(options), GetMockMapper());
 
             // Act
             var actual = _todoService.FindAll();
@@ -48,6 +53,16 @@ namespace myRestAPITests
             // Assert
             Assert.AreEqual(3, actual.Count);
             Assert.AreEqual("testTodo2", actual[1].Name);
+        }
+
+        [TestMethod]
+        public void CreateTodo()
+        {
+            var mockSet = new Mock<DbSet<Todo>>();
+
+            var mockContext = new Mock<ApplicationContext>();
+            mockContext.Setup(m => m.Todos).Returns(mockSet.Object);
+            var service = new TodoService(mockContext.Object, );
         }
     }
 }
