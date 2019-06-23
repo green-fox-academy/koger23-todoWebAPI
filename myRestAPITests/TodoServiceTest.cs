@@ -1,11 +1,19 @@
-﻿using AutoMapper;
+﻿using Autofac.Extras.Moq;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Linq;
 using myRestAPI;
 using myRestAPI.Models;
+using myRestAPI.Models.Assignee;
+using myRestAPI.Models.User;
 using myRestAPI.Profiles;
 using myRestAPI.Services;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace myRestAPITests
 {
@@ -55,14 +63,35 @@ namespace myRestAPITests
             Assert.AreEqual("testTodo2", actual[1].Name);
         }
 
-        [TestMethod]
-        public void CreateTodo()
-        {
-            var mockSet = new Mock<DbSet<Todo>>();
 
-            var mockContext = new Mock<ApplicationContext>();
-            mockContext.Setup(m => m.Todos).Returns(mockSet.Object);
-            var service = new TodoService(mockContext.Object, );
+        [TestMethod]
+        public void CreateTodo_ShouldBeBadRequest()
+        {
+            // Arrange
+            var options = GetTestDbOptions();
+
+            using (var context = new ApplicationContext(options))
+            {
+
+                var todoService = new TodoService(context, GetMockMapper());
+
+                var todoDTO = new TodoDTO()
+                {
+                    Name = "test1",
+                    Description = "use mock",
+                    AssigneeId = 1,
+                    Done = false,
+                    UserId = 1
+                };
+                var expected = new BadRequestResult();
+
+                // Act
+                Task<IActionResult> actual = todoService.CreateTodo(todoDTO);
+
+                // Assert
+                Assert.IsNotNull(actual);
+                Assert.AreEqual(expected.GetType(), actual.Result.GetType());
+            }
         }
     }
 }
