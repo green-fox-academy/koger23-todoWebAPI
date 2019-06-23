@@ -93,5 +93,51 @@ namespace myRestAPITests
                 Assert.AreEqual(expected.GetType(), actual.Result.GetType());
             }
         }
+
+        [TestMethod]
+        public void CreateTodo_ShouldBeOkResult()
+        {
+            // Arrange
+            var options = GetTestDbOptions();
+
+            using (var context = new ApplicationContext(options))
+            {
+                User user = new User()
+                {
+                    Id = 1,
+                    FirstName = "Test",
+                    LastName = "Moq",
+                    Username = "test_moq",
+                    Role = "User"
+                };
+
+                Assignee assignee = new Assignee()
+                {
+                    Email = "asd@example.com",
+                    Name = "Test Assignee",
+                };
+                context.Add<User>(user);
+                context.Add<Assignee>(assignee);
+
+                var todoService = new TodoService(context, GetMockMapper());
+
+                var todoDTO = new TodoDTO()
+                {
+                    Name = "test1",
+                    Description = "use mock",
+                    UserId = 1,
+                    AssigneeId = 1,
+                    Done = false
+                };
+                var expected = new OkResult();
+
+                // Act
+                Task<IActionResult> actual = todoService.CreateTodo(todoDTO);
+
+                // Assert
+                Assert.IsNotNull(actual);
+                Assert.AreEqual(expected.GetType(), actual.Result.GetType());
+            }
+        }
     }
 }
