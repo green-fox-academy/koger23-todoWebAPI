@@ -1,25 +1,31 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using myRestAPI;
 using myRestAPI.Models;
 using myRestAPI.Profiles;
 using myRestAPI.Services;
-using NUnit.Framework;
 
 namespace myRestAPITests
 {
     [TestClass]
     public class TodoServiceTest
     {
+        public TodoServiceTest()
+        {
+        }
+
+        public static DbContextOptions<ApplicationContext> GetTestDbOptions()
+        {
+            return new DbContextOptionsBuilder<ApplicationContext>()
+                .UseInMemoryDatabase(databaseName: "TestTodoDb")
+                .Options;
+        }
         [TestMethod]
         public void FindAll()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<ApplicationContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
+            var options = GetTestDbOptions();
             using (var context = new ApplicationContext(options))
             {
                 context.Todos.Add(new Todo { Name = "testTodo1" });
@@ -40,8 +46,8 @@ namespace myRestAPITests
             var actual = _todoService.FindAll();
 
             // Assert
-            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(3, actual.Count);
-            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual("testTodo2", actual[1].Name);
+            Assert.AreEqual(3, actual.Count);
+            Assert.AreEqual("testTodo2", actual[1].Name);
         }
     }
 }
